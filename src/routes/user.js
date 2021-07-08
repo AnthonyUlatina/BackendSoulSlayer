@@ -18,7 +18,7 @@ router.post('/add', async(req, res) => {
 
     console.log(userObject);
 
-    await pool.query('INSERT INTO SoulSlayer.user set ?', [userObject]);
+    await pool.query('INSERT INTO user set ?', [userObject]);
 
     res.send('User insert');
 });
