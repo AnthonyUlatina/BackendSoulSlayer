@@ -5,13 +5,19 @@ const pool = require('../database');
 
 router.get('/users', async (req, res) => {
 
-    var listUsers = await pool.query("SELECT * FROM user", function (err, values) {
+    let valuesReturn = null;
+
+    await pool.query("SELECT * FROM user", function (err, values) {
         if (err) {
             console.log(err);
+            res.json({"error": err["sqlMessage"]});
         } else {
+            console.log("Se encontranron datos");
             res.json(values);
         }
     });
+
+
 
 });
 
@@ -22,8 +28,10 @@ router.post('/add', async (req, res) => {
     await pool.query('INSERT INTO user set ?', [userObject], function (err, result) {
         if (err) {
             console.log(err);
+            res.json({"error": err["sqlMessage"]})
         } else {
             console.log(result);
+            res.json({"message": "Se insertó el usuario correctamente"});
         }
     });
 
