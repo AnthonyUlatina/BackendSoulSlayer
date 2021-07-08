@@ -1,5 +1,5 @@
-CREATE DATABASE SoulSlayer;
-USE SoulSlayer;
+CREATE DATABASE soulslayer;
+USE soulslayer;
 
 CREATE TABLE user(
     id INT(11) NOT NULL,

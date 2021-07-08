@@ -22,6 +22,6 @@ app.use(require('./routes/index'));
 app.use(require('./routes/user'));
 
 //Inicia el server
-app.listen(3000, () => {
-    console.log('Server en el puerto', 3000);
+app.listen(4000, () => {
+    console.log('Server en el puerto', 4000);
 });
