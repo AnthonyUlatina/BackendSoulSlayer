@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const MYSQLStore = require('express-mysql-session');
-const { database } = require('./keys');
+const { database } = require('./database/keys');
 const passport = require('passport');
 
 //inicializacion
@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
 app.use(require('./routes/index'));
-app.use(require('./routes/user'));
+app.use(require('./routes/user/user'));
 app.use(require('./routes/authenticate/login'));
 
 //Inicia el server
