@@ -1,13 +1,11 @@
 const { Router } = require('express');
 const router = Router();
-const passport = require('passport');
-const user = require('../user/user');
+//const passport = require('passport');
 const userController = require('../../controllers/UserController');
-const pool = require('../../database/database');
 
-require('./auth');
+//require('./auth');
 
-function isLoggedIn(req, res, next) {
+/*function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401);
 }
 
@@ -19,14 +17,12 @@ router.get('/auth/google',
 router.get('/auth/google/callback', passport.authenticate('google', {
     successRedirect: '/successfull',
     failureRedirect: '/failed',
-    successMessage: "Fine"
 }));
 
 //Successfull message
 router.get('/successfull', isLoggedIn, async (req, res) => {
-    
-    console.log(res.user);
-    res.json({ "message": `Wellcome ${user}` });
+    console.log(res.req.user.email);
+    res.json({ "message": `Wellcome ${res.req.user.email}`});
 });
 
 //Error in loggin
@@ -45,6 +41,9 @@ const getUserForEmail = async (email) => {
 };
 
 //Add user
-router.post('/user/add', userController.insertUser);
+router.post('/user/add', userController.insertUser);*/
+
+router.post('/auth/login', userController.getUserEmailPassword);
+
 
 module.exports = router;

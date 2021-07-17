@@ -54,9 +54,7 @@ exports.getUserForEmail = async (req, res) => {
 
 exports.insertUser = async (req, res) => {
 
-    const { email } = req.body;
-
-    const password = await helpers.generatePassword();
+    const { email, password } = req.body;
 
     const userObject = { "email": email, "password": password };
 
@@ -65,10 +63,43 @@ exports.insertUser = async (req, res) => {
     await pool.query('INSERT INTO user set ?', [userObject], function (err, result) {
         if (err) {
             console.log(err["sqlMessage"]);
-            res.json({ "error": err["sqlMessage"] })
+            res.json({ "message": err["sqlMessage"] })
         } else {
             res.json({ "message": "Insert user successfull", "user": `${userObject.email}` });
         }
+    });
+
+};
+
+//Get user for email and password
+exports.getUserEmailPassword = async (req, res) => {
+
+    const { email, password } = req.body;
+
+    console.log(req.body);
+
+    const userData = { "email": email, "password": password };
+
+    await pool.query('SELECT id, email,password FROM user WHERE email = ?', [userData.email], async function (err, result) {
+
+        if (err) {
+            console.log(err['sqlMessage']);
+            res.json({ "message": err['sqlMessage'] });
+        } else {
+            const userDataBase = result[0];
+
+            const validPassword = await helpers.matchPassword(userData.password, userDataBase.password);
+
+            console.log(validPassword);
+
+            if (validPassword) {
+                res.json({ "message": `Wellcome to SoulSlayer ${userDataBase.email}`});
+            } else {
+                res.json({ "message": "Invalid password" });
+            }
+
+        }
+
     });
 
 };
@@ -86,13 +117,13 @@ exports.getUserForEmailParam = async (email) => {
     }
 };
 
-exports.insertUserParam = async (email) => {
+exports.insertUserParam = async (email, password) => {
     try {
         const response = await axios({
             method: 'post',
             url: `http://localhost:4000/user/add`,
             responseType: 'json',
-            data: { "email": email }
+            data: { "email": email, "password": password }
         });
         return response.data;
     } catch (error) {

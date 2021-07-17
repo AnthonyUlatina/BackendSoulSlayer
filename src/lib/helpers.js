@@ -12,7 +12,7 @@ helpers.encryptPassword = async (password) => {
 
 helpers.matchPassword = async (password, savedPassword) => {
     try {
-        await bycript.compare(password, savedPassword);
+        return await bycript.compare(password, savedPassword);
     } catch (error) {
         console.log(error);
     }
