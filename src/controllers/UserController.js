@@ -86,16 +86,28 @@ exports.getUserEmailPassword = async (req, res) => {
             console.log(err['sqlMessage']);
             res.json({ "message": err['sqlMessage'] });
         } else {
-            const userDataBase = result[0];
 
-            const validPassword = await helpers.matchPassword(userData.password, userDataBase.password);
+            if (result !== null) {
+                const userDataBase = result[0];
 
-            console.log(validPassword);
+                if (userDataBase === undefined) {
+                    res.json({ "message": "Email or password is incorrect" });
+                } else {
 
-            if (validPassword) {
-                res.json({ "message": `Wellcome to SoulSlayer ${userDataBase.email}`});
+
+                    const validPassword = await helpers.matchPassword(userData.password, userDataBase.password);
+
+                    console.log(validPassword);
+
+                    if (validPassword) {
+                        res.json({ "message": `Wellcome to SoulSlayer ${userDataBase.email}` });
+                    } else {
+                        res.json({ "message": "Invalid password" });
+                    }
+                }
+
             } else {
-                res.json({ "message": "Invalid password" });
+                res.json({ "message": "Password or email is incorrect" });
             }
 
         }
