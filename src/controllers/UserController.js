@@ -100,7 +100,7 @@ exports.getUserEmailPassword = async (req, res) => {
                     console.log(validPassword);
 
                     if (validPassword) {
-                        res.json({ "message": `Wellcome to SoulSlayer ${userDataBase.email}` });
+                        res.json({ "message": `Welcome to SoulSlayer ${userDataBase.email}` });
                     } else {
                         res.json({ "message": "Invalid password" });
                     }
