@@ -46,4 +46,5 @@ router.post('/user/add', userController.insertUser);*/
 router.post('/auth/login', userController.getUserEmailPassword);
 
 
+
 module.exports = router;

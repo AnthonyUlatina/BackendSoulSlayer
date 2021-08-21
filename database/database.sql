@@ -35,3 +35,6 @@ CREATE TABLE user_has_game(
 
 ALTER TABLE user_has_game
 ADD PRIMARY KEY (id_user,id_game);
+
+ALTER TABLE `soulslayer`.`game` 
+ADD COLUMN `character` VARCHAR(10);

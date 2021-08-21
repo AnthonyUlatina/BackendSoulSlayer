@@ -36,7 +36,7 @@ exports.getUserForEmail = async (req, res) => {
     await pool.query('SELECT * FROM user WHERE email = ?', [email], function (err, result) {
 
         if (err) {
-            res.json({ "error": err["sqlMessage"] });
+            res.json({ "message": err["sqlMessage"] });
         } else {
 
             if (result.length === 0) {
@@ -91,18 +91,16 @@ exports.getUserEmailPassword = async (req, res) => {
                 const userDataBase = result[0];
 
                 if (userDataBase === undefined) {
-                    res.json({ "message": "Email or password is incorrect" });
+                    res.json({ "message": "Email or password is incorrect","user":null});
                 } else {
-
 
                     const validPassword = await helpers.matchPassword(userData.password, userDataBase.password);
 
-                    console.log(validPassword);
-
                     if (validPassword) {
-                        res.json({ "message": `Welcome to SoulSlayer ${userDataBase.email}` });
+                        console.log(userDataBase);
+                        res.json({ "message": `Welcome to SoulSlayer ${userDataBase.email}`, "user": userDataBase });
                     } else {
-                        res.json({ "message": "Invalid password" });
+                        res.json({ "message": "Invalid password" , "user":null});
                     }
                 }
 

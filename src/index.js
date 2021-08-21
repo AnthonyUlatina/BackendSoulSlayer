@@ -34,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./routes/index'));
 app.use(require('./routes/user/user'));
 app.use(require('./routes/authenticate/login'));
+app.use(require('./routes/game/game'));
 
 //Inicia el server
 app.listen(4000, () => {
