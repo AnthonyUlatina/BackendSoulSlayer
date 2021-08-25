@@ -91,7 +91,7 @@ exports.getUserEmailPassword = async (req, res) => {
                 const userDataBase = result[0];
 
                 if (userDataBase === undefined) {
-                    res.json({ "message": "Email or password is incorrect","user":null});
+                    res.json({ "message": "Email or password is incorrect", "user": null });
                 } else {
 
                     const validPassword = await helpers.matchPassword(userData.password, userDataBase.password);
@@ -100,7 +100,7 @@ exports.getUserEmailPassword = async (req, res) => {
                         console.log(userDataBase);
                         res.json({ "message": `Welcome to SoulSlayer ${userDataBase.email}`, "user": userDataBase });
                     } else {
-                        res.json({ "message": "Invalid password" , "user":null});
+                        res.json({ "message": "Invalid password", "user": null });
                     }
                 }
 
@@ -140,3 +140,29 @@ exports.insertUserParam = async (email, password) => {
         return null;
     }
 };
+
+exports.getUserForId = async (req, res) => {
+
+    const { id } = req.params;
+
+    await pool.query('SELECT * FROM user WHERE id = ?', [id], function (err, result) {
+
+        if (err) {
+            res.json({ "message": err["sqlMessage"] });
+        } else {
+
+            console.log(result);
+
+            if (result.length === 0) {
+                res.json({ "message": "Not found user", "user": null });
+            } else {
+
+                res.json({ "message": `Welcome to SoulSlayer ${result[0].email}`, "user": result[0] });
+            }
+
+        }
+
+    });
+
+};
+
