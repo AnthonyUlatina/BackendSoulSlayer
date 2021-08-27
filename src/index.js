@@ -37,6 +37,6 @@ app.use(require('./routes/authenticate/login'));
 app.use(require('./routes/game/game'));
 
 //Inicia el server
-app.listen(4000, () => {
-    console.log('Server en el puerto', 4000);
+app.listen(3000, () => {
+    console.log('Server on port 3000', 3000);
 });
